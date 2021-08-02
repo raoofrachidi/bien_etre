@@ -1,0 +1,30 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="masthead text-center text-white d-flex">
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <h1 class="text-uppercase text-white font-weight-bold">C'est + plus facile de manger mieux</h1>
+            <hr class="divider my-4">
+          </div>
+          <div class="col-lg-8 mx-auto">
+            <h2 class="text-white-75 font-weight-light mb-5">Trouvez un produit de subsitution pour ceux que vous consommez tous les jours</h2>
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+            <form action="{% url 'store:search' %}" method="get">
+                <input type="text" name="query" id ="query" style="border-radius:0.3rem; height:38px; border: none" placeholder="Produit">
+                <button type="submit" class="btn btn-primary btn-search" style="margin-left:10px;">Chercher</button>
+            </form>
+          </div>
+        </div>
+      </div>
+</header>
+{% endblock %}
+

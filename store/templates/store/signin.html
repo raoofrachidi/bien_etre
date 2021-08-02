@@ -1,0 +1,52 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<header class="smallheader text-center text-white d-flex">
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="text-uppercase">
+                    <strong>Connexion</strong>
+                </h1>
+            </div>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</header>
+<section id="connexion" class="text-center d-flex">
+    <div class="container my-auto">
+        <form method="POST">
+            {% csrf_token %}
+            <br>
+            <fieldset class="form-group">
+                <h3 class="border-bottom mb-4" id="headingsignin">Connectez-vous à votre compte Pur Beurre!</h3>
+
+            <div class="form-group {% if form.username.errors %}has-warning has-feedback{% endif %}" id="mdp">
+                <label for="username" class="control-label">Nom d'utilisateur :</label>
+                <input type="text" name="username" value="" id="id_username">
+            </div>
+
+            <div class="form-group {% if form.password.errors %}has-warning has-feedback{% endif %}" id="mdp">
+                <label for="password" class="control-label">Mot de passe :</label>
+                <input type="password" name="password" value="" id="id_password">
+            </div>
+            </fieldset>
+            <br>
+            <div class="form-group">
+                <button class="btn btn-primary btn-xl mt-50" type="submit" id="connection">Connexion</button>
+            </div>
+            <br>
+        </form>
+        <div>
+            <p id="phrase">Besoin d'un compte ?</p><a href="/store/signup/" id="signupredirect">Inscrivez-vous</a>
+        </div>
+        <br>
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="smallheader text-center text-white d-flex">
+   <div class="container my-auto">
+      <div class="row row-centered">
+         <div class="col-lg-6 col-md-5 col-sm-4 mx-auto ">
+         </div>
+      </div>
+   </div>
+</header>
+<section id="product_choice" class="p-4 text-center">
+   <div  class="container my-auto">
+      <h3 class="custom_title pb-3">Pour lequel de ces produits voulez-vous un substituant ?</h3>
+      <div class="row">
+         {% for product in products %}
+         <div class="col-xl-4 px-xl-5 col-lg-4 col-md-5 col-sm-6 col-xs-10 mx-auto text-center">
+            <form action="{% url 'store:substitute' %}" method="get">
+               <div class="item">
+                  <span class="nutriscore good-product" >{{ product.nutriscore }}</span>
+                  <img class="product_img img-fluid rounded"  src="{{ product.picture }}" alt="{{ product.name }}" >
+               </div>
+               <div class="carousel-caption mb-5">
+                  <h5 class="background">{{ product.name }}</h5>
+               </div>
+               <hr>
+               <button type="submit" class="btn btn-primary" name="chosen_product" value="{{product.name}}, {{product.category}}, {{product.picture}}, {{product.nutriscore}}, {{product.url}}">
+               Sélectionner
+               </button>
+            </form>
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+</section>
+{% endblock %}

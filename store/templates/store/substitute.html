@@ -1,0 +1,49 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<header id="selected_product" class="product p-4" >
+   <div class="container my-auto">
+      <div class="row row-centered">
+         <div class="col-lg-3 col-md-5 col-sm-4 mx-auto ">
+            <div class="item">
+               <img class="product_img img-fluid rounded"  src="{{request.session.selected_img}}">
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+<section id="product_choice" class="p-4 text-center">
+   <div  class="container my-auto">
+      <h3 class="custom_title pb-3">Vous pouvez remplacer ce produit par :</h3>
+      <hr>
+      <div class="row">
+         {% for alternative in alternatives %}
+         <div class="col-xl-4 px-xl-5 col-lg-4 col-md-5 col-sm-6 col-xs-10 mx-auto text-center flex-container">
+               <div class="item">
+                  <span class="nutriscore good-product" >{{ alternative.nutriscore }}</span>
+                  <img class="product_img img-fluid rounded"  src="{{ alternative.picture }}" alt="{{ alternative.name }}" >
+               </div>
+               <div class="carousel-caption mb-5 ">
+                  <h5 class="background">{{ alternative.name }}</h5>
+               </div>
+               <hr>
+               {% if user.is_authenticated %}
+               <form action="{% url 'store:detail' %}" method="get">
+                  <button type="submit" class="btn btn-primary" name="substitute" value="{{alternative.name}}, {{alternative.category}}, {{alternative.picture}}, {{alternative.nutriscore}}, {{alternative.url}}, {{alternative.picture_nutrition}}">Détails</button>
+               </form>
+               <br>
+               <form action="{% url 'store:favorite' %}" method="get">
+                  <button type="submit" class="btn btn-primary" name="favorite" value="{{alternative.name}}, {{alternative.category}}, {{alternative.picture}}, {{alternative.nutriscore}}, {{alternative.url}}, {{alternative.picture_nutrition}}">Sauvegarder</button>
+               </form>
+               {% else %}
+               <form action="{% url 'store:detail' %}" method="get">
+                  <button type="submit" class="btn btn-primary" name="substitute" value="{{alternative.name}}, {{alternative.category}}, {{alternative.picture}}, {{alternative.nutriscore}}, {{alternative.url}}, {{alternative.picture_nutrition}}">Détails</button>
+               </form>
+               {% endif %}
+         </div>
+         {% endfor %}
+      </div>
+   </div>
+</section>
+{% endblock %}

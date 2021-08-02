@@ -1,0 +1,66 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<header class="smallheader text-center text-white d-flex">
+    <div class="container my-auto">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</header>
+<section id="product_choice" class="p-4 text-center" style="height:660px">
+   <div  class="container my-auto">
+       <h3 class="custom_title pb-3">Aliments sauvegardés</h3>
+       <hr>
+       <div class="row">
+           {% for alternative in alternatives %}
+           <div class="col-xl-4 px-xl-5 col-lg-4 col-md-5 col-sm-6 col-xs-10 mx-auto text-center flex-container">
+               <div class="item">
+                   <span class="nutriscore good-product" >{{ alternative.nutriscore }}</span>
+                   <img class="product_img img-fluid rounded"  src="{{ alternative.picture }}" alt="{{ alternative.name }}" >
+               </div>
+               <div class="carousel-caption mb-5 ">
+                   <h5 class="background">{{ alternative.name }}</h5>
+               </div>
+               <hr>
+               <form action="{% url 'store:detail' %}" method="get">
+                   <button type="submit" class="btn btn-primary" name="substitute" value="{{alternative.name}}, {{alternative.category}}, {{alternative.picture}}, {{alternative.nutriscore}}, {{alternative.url}}, {{alternative.picture_nutrition}}">Détails</button>
+               </form>
+           </div>
+           {% endfor %}
+       </div>
+       <br>
+       <br>
+       <div class="text-center">
+           {% if not alternatives %}
+                <p>Vous n'avez encore enregistré aucun aliment en favori, mais faites-le de ce pas !</p>
+                <br>
+                <hr>
+                <br>
+                <a class="btn btn-primary" href="{% url 'index' %}">Retourner à la page d'accueil</a>
+           {% endif %}
+       </div>
+
+       <div class="mt-5">
+           <span class="step-links">
+           {% if alternatives.has_previous %}
+           <a href="?page=1">Première page</a>
+           <a href="?page={{ alternatives.previous_page_number }}">Précédent</a>
+           {% endif %}
+           <span class="current">
+           Page {{ alternatives.number }} sur {{ alternatives.paginator.num_pages }}
+           </span>
+           {% if alternatives.has_next %}
+           <a href="?page={{ alternatives.next_page_number }}">Suivant</a>
+           <a href="?page={{ alternatives.paginator.num_pages }}">Dernière page</a>
+           {% endif %}
+           </span>
+       </div>
+   </div>
+</section>
+{% endblock %}

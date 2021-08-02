@@ -1,0 +1,44 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<header id="selected_product" class="product p-4" >
+   <div class="container my-auto">
+      <div class="row row-centered">
+         <div class="col-lg-3 col-md-5 col-sm-4 mx-auto ">
+            <div class="item">
+               <img class="product_img img-fluid rounded"  src="{{request.session.substitut_img}}">
+               <div class="carousel-caption">
+                  <h5 class="background">{{request.session.substitut_name}}</h5>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+<section class="product p-4" >
+   <div class="container my-auto">
+      <div class="row row-centered">
+         <div class="col-lg-4 col-md-5 col-sm-4 mx-auto ">
+            <h4 class="custom_title">Nutriscore</h4>
+            <hr>
+            <div class="item">
+               <img class="nutriscore_picture img-fluid rounded" src="https://static.openfoodfacts.org/images/misc/nutriscore-{{ request.session.substitut_nutriscore }}.svg">
+            </div>
+         </div>
+         <div class="col-lg-4 col-md-5 col-sm-4 mx-auto ">
+            <h4 class="custom_title">Repères nutritionnels pour 100g</h4>
+            <hr>
+            <div class="item">
+               <img class="product_img img-fluid rounded" src="{{request.session.substitut_img_nutrition}}">
+            </div>
+         </div>
+      </div>
+      <div class="col-8 offset-4 d-flex" style="margin-top:100px; margin-bottom:80px">
+         <button class="btn btn-primary">
+            <a href="{{request.session.substitut_url}} " target="_blank" style="color:#fff">Voir la fiche d'OpenFoodFacts</a>
+         </button>
+      </div>
+   </div>
+</section>
+{% endblock %}
