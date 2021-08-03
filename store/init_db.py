@@ -2,7 +2,7 @@ import requests
 
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import DataError, IntegrityError
-from .models import Category, Product
+from .models import Product
 
 
 class Command(BaseCommand):
@@ -14,7 +14,6 @@ class Command(BaseCommand):
     def create_db(self):
 
         for category in self.CATEGORIES:
-            new_category = Category.objects.create(name=category)
 
             params = {
                 'action': 'process',
@@ -41,7 +40,7 @@ class Command(BaseCommand):
                     picture = product['image_front_url']
                     picture_nutrition = product["image_nutrition_small_url"]
 
-                    Product.objects.create(name=name, category=new_category,
+                    Product.objects.create(name=name, category=category,
                                            nutriscore=nutriscore,
                                            url=url, picture=picture, picture_nutrition=picture_nutrition)
 
